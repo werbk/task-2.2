@@ -1,24 +1,15 @@
-from fixture.TestBase import BaseClass
-from selenium.webdriver.firefox.webdriver import WebDriver
+
+from tests_contract.contract_lib import ContactBase
 
 
 class Group:
-    def __init__(self, group_name, group_header, group_footer):
+    def __init__(self, group_name='', group_header='', group_footer=''):
         self.group_name = group_name
         self.group_header = group_header
         self.group_footer = group_footer
 
 
-class GroupBase():
-    def __init__(self):
-        # This code duplicated in GroupBase & ContractBase, if do like says in video. How i can fix it? 
-        # self.wd = WebDriver()
-        # self.wd.implicitly_wait(60)
-
-
-        self.wd = WebDriver()
-        self.wd.implicitly_wait(60)
-        self.session = BaseClass(self)
+class GroupBase(ContactBase):
 
     def create_group(self, Group):
         wd = self.wd
@@ -34,7 +25,7 @@ class GroupBase():
         wd.find_element_by_name("group_footer").send_keys(Group.group_footer)
         wd.find_element_by_name("submit").click()
 
-    def delete_group(self):
+    def delete_first_group(self):
         wd = self.wd
         self.wd.find_element_by_link_text("groups").click()
         self.wd.find_element_by_css_selector("span.group").click()
@@ -48,6 +39,4 @@ class GroupBase():
         wd.find_element_by_link_text("group page").click()
 
     def restore_group(self):
-        self.delete_group()
-        self.wd.find_element_by_link_text("Logout").click()
         self.wd.quit()
